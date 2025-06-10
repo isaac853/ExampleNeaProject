@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+To Do App : sign-up
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>todo.</h1>
+    <h2>sign-up</h2>
+    <form action = "/auth/createuser">
+        <div>
+            <label for="username">username:</label>
+            <input name="username" id="username" type="text" />
+
+        </div>
+
+        <div>
+            <label for="password">password:</label>
+            <input name="password" id="password" type="password" />
+
+        </div>
+        <div>
+            <label for="repassword">re-enter password:</label>
+            <input name="repassword" id="repassword" type="password" />
+
+        </div>
+        <div>
+            <input type="submit" value="sign-in" />
+        </div>
+
+    </form>
+    <p>already have an account? <a href="/signin"> click here to sign in </a></p>
+</div>
+{% endblock %}

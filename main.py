@@ -8,6 +8,19 @@ def home():
         
 @app.route("/dashboard")
 def dashboard():
-    return "dashboard"
+    return render_template("dashboard.html")
+
+@app.route("/signin")
+def signin():
+    return render_template("signin.html")
+
+@app.route("/signup")
+def signup():
+    return render_template("signup.html")
+
+@app.route("/auth/createuser")
+def createuser():
+    return "creating user"
+
 
 app.run(debug = True)
