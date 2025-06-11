@@ -9,25 +9,25 @@ To Do App : sign-up
 <div>
     <h1>todo.</h1>
     <h2>sign-up</h2>
-    <form action = "/auth/createuser">
+    <form action = "/auth/createuser" method = "post">
         <div>
             <label for="username">username:</label>
-            <input name="username" id="username" type="text" />
+            <input name="username" id="username" type="text" required minlength="3"/>
 
         </div>
 
         <div>
             <label for="password">password:</label>
-            <input name="password" id="password" type="password" />
+            <input name="password" id="password" type="password" required minlength = "8"/>
 
         </div>
         <div>
             <label for="repassword">re-enter password:</label>
-            <input name="repassword" id="repassword" type="password" />
+            <input name="repassword" id="repassword" type="password" required minlength = "8"/>
 
         </div>
         <div>
-            <input type="submit" value="sign-in" />
+            <input type="submit" value="sign-up" />
         </div>
 
     </form>

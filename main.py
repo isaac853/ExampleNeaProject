@@ -1,5 +1,5 @@
-from flask import Flask, render_template
-
+from flask import Flask, render_template, request
+from database import DatabaseHandler
 app = Flask(__name__)
 
 @app.route("/")
@@ -18,9 +18,17 @@ def signin():
 def signup():
     return render_template("signup.html")
 
-@app.route("/auth/createuser")
+@app.route("/auth/createuser", methods = ["POST"])
 def createuser():
-    return "creating user"
+    formDetails = request.form
+    username = formDetails.get("username")
+    password = formDetails.get("password")
+    repassword = formDetails.get("repassword")
+
+    if len(username) > 2 and len(password) > 7 and len(repassword):
+        return"creating user"
+
+    return "failed to create user"
 
 
 app.run(debug = True)
