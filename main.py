@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, redirect, render_template, request, url_for
 from database import DatabaseHandler
 app = Flask(__name__)
 
@@ -30,9 +30,9 @@ def createuser():
         success = db.createUser(username, password)
         if success:
 
-            return "user created successfully"
+            return redirect(url_for("dashboard")) 
 
-    return"failed to create user"
+    return redirect(url_for("signup"))
 
 
 
