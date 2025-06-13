@@ -25,10 +25,16 @@ def createuser():
     password = formDetails.get("password")
     repassword = formDetails.get("repassword")
 
-    if len(username) > 2 and len(password) > 7 and len(repassword):
-        return"creating user"
+    if len(username) > 2 and len(password) > 7 and len(repassword) > 7 and password == repassword:
+        db = DatabaseHandler()
+        success = db.createUser(username, password)
+        if success:
 
-    return "failed to create user"
+            return "user created successfully"
+
+    return"failed to create user"
+
+
 
 
 app.run(debug = True)

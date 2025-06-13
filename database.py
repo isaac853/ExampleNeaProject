@@ -14,3 +14,13 @@ class DatabaseHandler:
                          username TEXT UNIQUE NOT NULL,
                          password TEXT NOT NULL
                          );""")
+            
+    def createUser(self, username, password):
+        try:
+            with self.connect() as conn:
+                conn.execute("INSERT INTO users (username, password ) VALUES (?,?)", (username, password))
+                conn.commit()
+            return True
+        
+        except:
+            return False
