@@ -31,6 +31,11 @@ To Do App : sign-up
         </div>
 
     </form>
+
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+
     <p>already have an account? <a href="/signin"> click here to sign in </a></p>
 </div>
 {% endblock %}
