@@ -45,12 +45,19 @@ def createuser():
 
 
     db = DatabaseHandler()
-    success = db.createUser(username, password)
+    success, errorType = db.createUser(username, password)
     if success:
 
         return redirect(url_for("pages.dashboard")) 
 
-    flash("sign-up was not - successful please try again")
+    if errorType == "inetgrity-error":
+        flash("invalid data has been entered, please try again")
+
+    elif errorType == "unique-error":
+        flash("Username taken, please use another.")
+
+    else:
+        flash("an unkown error has occured")
     return redirect(url_for("pages.signup"))
 
 @auth.route("/signout")
