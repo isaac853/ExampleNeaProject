@@ -16,6 +16,17 @@ class DatabaseHandler:
                          password TEXT NOT NULL CHECK(length(password) > 7)
                          );""")
             
+            conn.execute("""CREATE TABLE IF NOT EXISTS tasks (
+                         taskID INTEGER PRIMARY KEY AUTOINCREMENT,
+                         userID INTEGER NOT NULL,
+                         taskName TEXT NOT NULL CHECK(length(taskName) > 2),
+                         taskDescription TEXT NOT NULL,
+                         status TEXT DEFAULT "incomplete" CHECK(status IN ("incomplete", "complete")),
+                         created TEXT DEFAULT CURRENT_TIMESTAMP,
+                         FOREIGN KEY (userID) REFERENCES users(USERID) ON DELETE CASCADE
+                         )""")
+
+
     def createUser(self, username, password):
         try:
             hashed_password = generate_password_hash(password)
@@ -38,12 +49,36 @@ class DatabaseHandler:
     def authoriseUser(self, username, password):
         try:
             with self.connect() as conn:
-                results = conn.execute("SELECT password FROM users WHERE username = ?", (username,))
-                stored_hash = results.fetchone()
-                print()
-                if userDetails != None:
-                    return True
-                return False
-        
+                results = conn.execute("SELECT password, userID FROM users WHERE username = ?", (username,))
+                stored_hash, userID = results.fetchone()
+                if check_password_hash(stored_hash, password):
+                    return True, userID
+                else:
+                    return False,None
+
         except:
             return False
+        
+    def createTask(self, taskName, description, userID):
+        try:
+            with self.connect() as conn:
+                conn.execute("""INSERT INTO tasks
+                             (taskName, taskDescription, userID)
+                             VALUES
+                             (?,?,?)""",(taskName, description, userID))
+                conn.commit()
+                return True, None
+        except:
+            return False, "error-unknown"
+      
+        
+    def fetchAllTasks(self, userID):
+        try:
+            with self.connect() as conn:
+                results = conn.execute("""SELECT taskName, TaskDescription, status, created
+                             FROM tasks
+                             WHERE userID = ?""", (userID,))
+                tasks = results.fetchall()
+                print(tasks)
+        except:
+            print("an error occured")
