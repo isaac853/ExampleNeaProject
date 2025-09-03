@@ -42,9 +42,6 @@ def createTask():
     return redirect(url_for("pages.createTask"))
 
 
-# @tasks.route("/get")
-# def getTasks():
-#     return "getting all tasks"
 
 @tasks.route("/get/<int:taskID>")
 def getTaskByID(taskID):
@@ -54,6 +51,37 @@ def getTaskByID(taskID):
 def updateTask(taskID):
     return "updating task " + str(taskID)
 
-@tasks.route("/delete/<int:taskID>")
+@tasks.route("/updateStatus/<int:taskID>", methods = ["post"])
+def updateStatus(taskID):
+    
+    db = DatabaseHandler()
+    userID = session["userID"]
+    formData = request.form
+    status = formData.get("status")
+
+    if status == "incomplete":
+        newStatus = "complete"
+    else:
+        newStatus = "incomplete"
+
+    success = db.updateStatus(taskID, userID, newStatus)
+
+
+    if not success:
+        flash("task not updated successfully")
+
+    return redirect(url_for("pages.dashboard"))
+
+@tasks.route("/delete/<int:taskID>", methods = ["post"])
 def deleteTask(taskID):
-    return "deleting task " + str(taskID)
+
+    db = DatabaseHandler()
+    userID = session["userID"]
+    success = db.deleteTask(taskID,userID)
+
+    if not success:
+        flash("Task not deleted")
+    else: 
+        flash("task deleted succesfully")
+
+    return redirect(url_for("pages.dashboard"))

@@ -18,9 +18,11 @@ def dashboard():
     userId = session["userID"]
 
     db = DatabaseHandler()
-    db.fetchAllTasks(userId)
+    success, tasks = db.fetchAllTasks(userId)
 
-    return render_template("dashboard.html", currentUser = currentUser)
+    messages = get_flashed_messages()
+
+    return render_template("dashboard.html", currentUser = currentUser, tasks = tasks, messages = messages)
 
 
 @pages.route("/signin")

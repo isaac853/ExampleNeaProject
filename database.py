@@ -70,15 +70,40 @@ class DatabaseHandler:
                 return True, None
         except:
             return False, "error-unknown"
-      
-        
+
+
     def fetchAllTasks(self, userID):
         try:
             with self.connect() as conn:
-                results = conn.execute("""SELECT taskName, TaskDescription, status, created
+                results = conn.execute("""SELECT taskID, taskName, TaskDescription, status, created
                              FROM tasks
                              WHERE userID = ?""", (userID,))
                 tasks = results.fetchall()
-                print(tasks)
+                
+                if len(tasks) > 0:
+                    return True, tasks
+                
+                return True, None
         except:
-            print("an error occured")
+            return False, None
+
+    def deleteTask(self,taskID, userID):
+        try:
+            with self.connect() as conn:
+                conn.execute("DELETE FROM tasks WHERE taskID = ? AND userID = ?", (taskID, userID))
+                conn.commit()
+
+                return True
+        except:
+            return False
+        
+    def updateStatus(self, taskID, userID, newStatus):
+        try:
+            with self.connect() as conn:
+                conn.execute("UPDATE tasks SET status = ? WHERE taskID = ? AND userID =?;", (newStatus, taskID, userID))
+                conn.commit()
+                return True
+            
+        except Exception as error:
+            print(error)
+            return False
