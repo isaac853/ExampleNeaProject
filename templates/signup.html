@@ -5,25 +5,29 @@
 To Do App : sign-up
 {% endblock %}
 
+{% block head %}
+    <link rel = "stylesheet" href = "{{ url_for('static',filename = 'styles/signinandup.css') }}">
+{% endblock %}
+
 {% block content %}
-<div>
-    <h1>todo.</h1>
-    <h2>sign-up</h2>
+<div class = "container">
+    <h1 class = "title">todo.</h1>
+    <h2 class = "subtitle">sign-up</h2>
     <form action = "/auth/createuser" method = "post">
         <div>
-            <label for="username">username:</label>
-            <input name="username" id="username" type="text" required minlength="3"/>
+            <!-- <label for="username">username:</label> -->
+            <input name="username" id="username" type="text" required minlength="3" placeholder="Username"/>
 
         </div>
 
         <div>
-            <label for="password">password:</label>
-            <input name="password" id="password" type="password" required minlength = "8"/>
+            <!-- <label for="password">password:</label> -->
+            <input name="password" id="password" type="password" required minlength = "8" placeholder="Password"/>
 
         </div>
         <div>
-            <label for="repassword">re-enter password:</label>
-            <input name="repassword" id="repassword" type="password" required minlength = "8"/>
+            <!-- <label for="repassword">re-enter password:</label> -->
+            <input name="repassword" id="repassword" type="password" required minlength = "8"placeholder="Re-Enter Password"/>
 
         </div>
         <div>

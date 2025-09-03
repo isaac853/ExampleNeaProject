@@ -5,20 +5,26 @@
 To Do App : sign-in
 {% endblock %}
 
+{% block head %}
+    <link rel = "stylesheet" href = "{{ url_for('static',filename = 'styles/signinandup.css') }}">
+{% endblock %}
+
+
+
 {% block content %}
-<div>
-    <h1>todo.</h1>
-    <h2>sign-in</h2>
+<div class = "container">
+    <h1 class="title">todo.</h1>
+    <h2 class = "subtitle">sign-in</h2>
     <form action = "/auth/authoriseUser" method = "post">
         <div>
-            <label for="username">username:</label>
-            <input name="username" id="username" type="text" />
+            <!-- <label for="username">username:</label> -->
+            <input name="username" id="username" type="text" placeholder="Username"/>
 
         </div>
 
         <div>
-            <label for="password">password:</label>
-            <input name="password" id="password" type="password" />
+            <!-- <label for="password">password:</label> -->
+            <input name="password" id="password" type="password"placeholder="Password" />
 
         </div>
         <div>
